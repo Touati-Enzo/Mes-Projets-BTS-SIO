@@ -54,15 +54,19 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('reservations/store', 'ReservationController::store');
     $routes->get('reservations/detail/(:num)', 'ReservationController::detail/$1');
     $routes->get('reservations/cancel/(:num)', 'ReservationController::cancel/$1');
+    $routes->get('reservations/admin', 'ReservationController::adminReservations');
+    $routes->post('reservations/updateStatut/(:num)', 'ReservationController::updateStatut/$1');
+    $routes->post('reservations/quickUpdate/(:num)', 'ReservationController::quickUpdate/$1');
+    $routes->get('reservations/delete/(:num)', 'ReservationController::adminDelete/$1');
 
     // Routes des chambres
     $routes->get('chambres', 'ChambreController::index');
     $routes->get('chambres/detail/(:num)', 'ChambreController::detail/$1');
     $routes->get('chambres/create', 'ChambreController::create');
     $routes->post('chambres/store', 'ChambreController::store');
-    $routes->get('chambres/edit/(:num)', 'ChambreController::edit/$1');
-    $routes->post('chambres/update/(:num)', 'ChambreController::update/$1');
     $routes->get('chambres/delete/(:num)', 'ChambreController::delete/$1');
+    $routes->get('chambres/admin', 'ChambreController::admin');
+    $routes->post('chambres/quickUpdate/(:num)', 'ChambreController::quickUpdate/$1');
 
     // Routes du profil
     $routes->get('profile', 'ProfileController::index');

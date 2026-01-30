@@ -8,7 +8,7 @@ class ReservationModel extends Model
 {
     protected $table = 'reservations';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['user_id', 'num_chambre', 'date_debut', 'date_fin', 'prix', 'nb_personne'];
+    protected $allowedFields = ['user_id', 'num_chambre', 'date_debut', 'date_fin', 'prix', 'nb_personne', 'statut'];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
@@ -17,6 +17,15 @@ class ReservationModel extends Model
     {
         return $this->where('user_id', $userId)
             ->orderBy('date_debut', 'DESC')
+            ->findAll();
+    }
+
+    public function getToutesReservations()
+    {
+        return $this->select('reservations.*, users.username, users.email, users.first_name, users.last_name, chambres.numero_chambre, chambres.prix_journalier')
+            ->join('users', 'reservations.user_id = users.id', 'left')
+            ->join('chambres', 'reservations.num_chambre = chambres.numero_chambre', 'left')
+            ->orderBy('reservations.date_debut', 'DESC')
             ->findAll();
     }
 

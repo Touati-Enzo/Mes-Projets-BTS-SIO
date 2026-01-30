@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : lun. 12 jan. 2026 à 17:42
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.2.4
+-- Hôte : 127.0.0.1
+-- Généré le : jeu. 29 jan. 2026 à 19:06
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `ProjetCVVEN`
+-- Base de données : `projetcvven`
 --
 
 -- --------------------------------------------------------
@@ -42,27 +42,11 @@ CREATE TABLE `chambres` (
 --
 
 INSERT INTO `chambres` (`id`, `numero_chambre`, `prix_journalier`, `personne_max`, `description`, `date_creation`, `date_modification`) VALUES
-(1, '101', 80.00, 2, 'Chambre standard avec lit double, salle de bain privée et TV', '2025-12-09 16:15:35', '2025-12-09 16:15:35'),
+(1, '101', 80.00, 2, 'Chambre standard avec lit double, salle de bain privée et TV', '2025-12-09 16:15:35', '2026-01-13 14:44:55'),
 (2, '102', 85.00, 2, 'Chambre vue jardin, lit double et bureau de travail', '2025-12-09 16:15:35', '2025-12-09 16:15:35'),
 (3, '201', 120.00, 4, 'Chambre familiale avec 2 lits doubles, parfaite pour familles', '2025-12-09 16:15:35', '2025-12-09 16:15:35'),
 (4, '301', 180.00, 2, 'Suite avec salon séparé, jacuzzi et vue panoramique', '2025-12-09 16:15:35', '2025-12-09 16:15:35'),
-(5, '001', 90.00, 2, 'Chambre PMR accessible aux personnes à mobilité réduite', '2025-12-09 16:15:35', '2025-12-09 16:15:35');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `version` varchar(255) NOT NULL,
-  `class` varchar(255) NOT NULL,
-  `group` varchar(255) NOT NULL,
-  `namespace` varchar(255) NOT NULL,
-  `time` int(11) NOT NULL,
-  `batch` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(5, '001', 90.00, 3, 'Chambre PMR accessible aux personnes à mobilité réduite', '2025-12-09 16:15:35', '2026-01-13 14:38:46');
 
 -- --------------------------------------------------------
 
@@ -79,20 +63,20 @@ CREATE TABLE `reservations` (
   `prix` decimal(10,2) NOT NULL,
   `nb_personne` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `statut` enum('en_attente','confirmee','annulee') NOT NULL DEFAULT 'en_attente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `user_id`, `num_chambre`, `date_debut`, `date_fin`, `prix`, `nb_personne`, `created_at`, `updated_at`) VALUES
-(2, 15, '102', '2026-01-25', '2026-01-28', 255.00, 2, '2026-01-12 15:31:38', '2026-01-12 15:31:38'),
-(3, 1, '201', '2026-02-16', '2026-02-18', 240.00, 4, '2026-01-12 15:34:04', '2026-01-12 15:34:04'),
-(4, 15, '201', '2026-01-12', '2026-01-15', 360.00, 1, '2026-01-12 16:00:37', '2026-01-12 16:00:37'),
-(5, 15, '001', '2026-01-13', '2026-01-14', 90.00, 2, '2026-01-12 16:01:43', '2026-01-12 16:01:43'),
-(6, 15, '101', '2026-01-13', '2026-01-21', 640.00, 1, '2026-01-12 16:06:03', '2026-01-12 16:06:03'),
-(7, 15, '102', '2026-01-14', '2026-01-16', 170.00, 1, '2026-01-12 16:06:10', '2026-01-12 16:06:10');
+INSERT INTO `reservations` (`id`, `user_id`, `num_chambre`, `date_debut`, `date_fin`, `prix`, `nb_personne`, `created_at`, `updated_at`, `statut`) VALUES
+(2, 15, '102', '2026-01-13', '2026-01-14', 255.00, 2, '2026-01-12 15:31:38', '2026-01-13 15:36:35', 'confirmee'),
+(5, 15, '001', '2026-01-13', '2026-01-14', 90.00, 2, '2026-01-12 16:01:43', '2026-01-12 16:01:43', 'en_attente'),
+(6, 15, '101', '2026-01-13', '2026-01-21', 640.00, 2, '2026-01-12 16:06:03', '2026-01-13 15:46:05', 'en_attente'),
+(7, 15, '102', '2026-01-14', '2026-01-30', 170.00, 2, '2026-01-12 16:06:10', '2026-01-13 15:36:51', 'en_attente'),
+(8, 15, '101', '2026-01-30', '2026-02-01', 160.00, 2, '2026-01-29 18:00:54', '2026-01-29 18:02:48', 'annulee');
 
 -- --------------------------------------------------------
 
@@ -134,12 +118,6 @@ ALTER TABLE `chambres`
   ADD UNIQUE KEY `numero_chambre` (`numero_chambre`);
 
 --
--- Index pour la table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Index pour la table `reservations`
 --
 ALTER TABLE `reservations`
@@ -165,25 +143,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `chambres`
 --
 ALTER TABLE `chambres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT pour la table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Contraintes pour les tables déchargées

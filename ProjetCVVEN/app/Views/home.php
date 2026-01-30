@@ -142,6 +142,10 @@
             background: white;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .action-card:hover {
@@ -168,19 +172,34 @@
         }
 
         .btn-action {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            background: linear-gradient(135deg, #0066cc 0%, #00b4d8 100%);
             border: none;
             color: white;
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 5px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 6px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: auto auto 0 auto;
+            font-size: 0.95rem;
+            width: fit-content;
+            line-height: 1;
+        }
+
+        .btn-action i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
         .btn-action:hover {
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
         }
 
         /* Footer */
@@ -247,6 +266,25 @@
                             <i class="fas fa-calendar me-2"></i>Réservations
                         </a>
                     </li>
+                    <?php if ($user['role'] === 'admin'): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" style="color: rgba(255, 255, 255, 0.8) !important; font-weight: 500;">
+                                <i class="fas fa-cog me-2"></i>Gestion
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url('/chambres/admin') ?>">
+                                        <i class="fas fa-door-open me-2"></i>Gestion des chambres
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url('/reservations/admin') ?>">
+                                        <i class="fas fa-list me-2"></i>Gestion des réservations
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" style="color: rgba(255, 255, 255, 0.8) !important; font-weight: 500;">
                             <i class="fas fa-user me-2"></i><?= session()->get('username') ?>
@@ -309,7 +347,7 @@
 
         <!-- Action Cards -->
         <div class="row">
-            <div class="col-md-6 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="action-card">
                     <i class="fas fa-calendar-plus"></i>
                     <h4>Nouvelle réservation</h4>
@@ -319,7 +357,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="action-card">
                     <i class="fas fa-list"></i>
                     <h4>Mes réservations</h4>
@@ -329,7 +367,50 @@
                     </a>
                 </div>
             </div>
+            <div class="col-md-4 mb-4">
+                <div class="action-card">
+                    <i class="fas fa-door-open"></i>
+                    <h4>Consulter les chambres</h4>
+                    <p>Découvrez les chambres disponibles pour réserver.</p>
+                    <a href="<?= base_url('/chambres') ?>" class="btn btn-action">
+                        <i class="fas fa-eye me-2"></i>Voir
+                    </a>
+                </div>
+            </div>
         </div>
+
+        <!-- Admin Management Section (Admin Only) -->
+        <?php if ($user['role'] === 'admin'): ?>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 style="color: #0066cc; margin-bottom: 20px;">
+                        <i class="fas fa-shield-alt me-2"></i>Gestion d'Administration
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="action-card" style="border-left: 4px solid #0066cc;">
+                        <i class="fas fa-door-open" style="color: #0066cc; font-size: 2.5rem;"></i>
+                        <h4>Gestion des Chambres</h4>
+                        <p>Créez, modifiez et supprimez les chambres de votre établissement.</p>
+                        <a href="<?= base_url('/chambres/admin') ?>" class="btn btn-action">
+                            <i class="fas fa-sliders-h me-2"></i>Gérer les chambres
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="action-card" style="border-left: 4px solid #00b4d8;">
+                        <i class="fas fa-tasks" style="color: #00b4d8; font-size: 2.5rem;"></i>
+                        <h4>Gestion des Réservations</h4>
+                        <p>Consultez et modifiez le statut de toutes les réservations clients.</p>
+                        <a href="<?= base_url('/reservations/admin') ?>" class="btn btn-action">
+                            <i class="fas fa-list me-2"></i>Gérer les réservations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
         <!-- Quick Stats -->
         <div class="row mt-5">

@@ -147,4 +147,119 @@ class ReservationController extends Controller
                 ->with('error', 'Erreur lors de l\'annulation');
         }
     }
+
+    public function adminReservations()
+    {
+        // Vérifier que l'utilisateur est admin
+        if ($this->session->get('role') !== 'admin') {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Accès non autorisé');
+        }
+
+        $reservations = $this->reservationModel->getToutesReservations();
+        $chambres = $this->chambreModel->findAll();
+
+        $data = [
+            'title' => 'Gestion des réservations',
+            'reservations' => $reservations,
+            'chambres' => $chambres,
+            'user' => [
+                'username' => $this->session->get('username'),
+                'role' => $this->session->get('role')
+            ]
+        ];
+
+        return view('reservations/admin', $data);
+    }
+
+    public function updateStatut($id)
+    {
+        // Vérifier que l'utilisateur est admin
+        if ($this->session->get('role') !== 'admin') {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Accès non autorisé');
+        }
+
+        $statut = $this->request->getPost('statut');
+        $validStatuts = ['en_attente', 'confirmee', 'annulee'];
+
+        if (!in_array($statut, $validStatuts)) {
+            return redirect()->back()
+                ->with('error', 'Statut invalide');
+        }
+
+        $reservation = $this->reservationModel->find($id);
+        if (!$reservation) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Réservation non trouvée');
+        }
+
+        if ($this->reservationModel->update($id, ['statut' => $statut])) {
+            return redirect()->back()
+                ->with('success', 'Statut de la réservation mis à jour avec succès !');
+        } else {
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la mise à jour');
+        }
+    }
+
+    public function adminDelete($id)
+    {
+        // Vérifier que l'utilisateur est admin
+        if ($this->session->get('role') !== 'admin') {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Accès non autorisé');
+        }
+
+        $reservation = $this->reservationModel->find($id);
+        if (!$reservation) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Réservation non trouvée');
+        }
+
+        if ($this->reservationModel->delete($id)) {
+            return redirect()->to('/reservations/admin')
+                ->with('success', 'Réservation supprimée avec succès !');
+        } else {
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la suppression');
+        }
+    }
+
+    public function quickUpdate($id)
+    {
+        // Vérifier que l'utilisateur est admin
+        if ($this->session->get('role') !== 'admin') {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Accès non autorisé');
+        }
+
+        $reservation = $this->reservationModel->find($id);
+        if (!$reservation) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Réservation non trouvée');
+        }
+
+        $num_chambre = $this->request->getPost('num_chambre');
+        $date_debut = $this->request->getPost('date_debut');
+        $date_fin = $this->request->getPost('date_fin');
+        $nb_personne = $this->request->getPost('nb_personne');
+        $prix = $this->request->getPost('prix');
+
+        // Vérifier que la chambre existe
+        $chambre = $this->chambreModel->where('numero_chambre', $num_chambre)->first();
+        if (!$chambre) {
+            return redirect()->back()
+                ->with('error', 'Chambre invalide');
+        }
+
+        $data = [
+            'num_chambre' => $num_chambre,
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'nb_personne' => $nb_personne,
+            'prix' => $prix,
+        ];
+
+        if ($this->reservationModel->update($id, $data)) {
+            return redirect()->back()
+                ->with('success', 'Réservation mise à jour avec succès !');
+        } else {
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la mise à jour');
+        }
+    }
 }

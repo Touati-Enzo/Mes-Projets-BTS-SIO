@@ -118,6 +118,25 @@
                             <i class="fas fa-calendar me-2"></i>Réservations
                         </a>
                     </li>
+                    <?php if (session()->get('role') === 'admin'): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" style="color: rgba(255, 255, 255, 0.8) !important; font-weight: 500;">
+                                <i class="fas fa-cog me-2"></i>Gestion
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url('/chambres/admin') ?>">
+                                        <i class="fas fa-door-open me-2"></i>Gestion des chambres
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url('/reservations/admin') ?>">
+                                        <i class="fas fa-list me-2"></i>Gestion des réservations
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" style="color: rgba(255, 255, 255, 0.8) !important; font-weight: 500;">
                             <i class="fas fa-user me-2"></i><?= session()->get('username') ?>
