@@ -1,0 +1,17 @@
+.button{
+    -fx-background-color: #34495e;
+    -fx-border-color: derive(#2fd179, -30%);
+    -fx-border-width: 0.2px;
+    -fx-font-size: 20pt;
+    -fx-font-family: "Lato bold", "Calibri";
+    -fx-text-fill: white;
+}
+
+.button:hover{
+    -fx-font-size: 24pt;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-text-fill: white;
+}
