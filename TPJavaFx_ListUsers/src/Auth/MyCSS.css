@@ -1,0 +1,81 @@
+/* ==============================
+   STYLE UNIQUE POUR BOUTON "SE CONNECTER"
+   ============================== */
+
+/* Style de base du bouton */
+.button {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-padding: 15px 40px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.3, 0, 3);
+    -fx-transition: all 0.3s ease;
+}
+
+/* Style spécifique pour le bouton de connexion */
+#btnConnexion {
+    /* Dégradé de couleur bleu moderne */
+    -fx-background-color: linear-gradient(to right, #4a6cf7, #6a8cff);
+    
+    /* Bordure subtile */
+    -fx-border-color: #4a6cf7;
+    -fx-border-width: 2px;
+    
+    /* Effet de brillance */
+    -fx-background-insets: 0;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    
+    /* Animation au survol */
+    -fx-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Effet au survol */
+#btnConnexion:hover {
+    /* Dégradé plus foncé */
+    -fx-background-color: linear-gradient(to right, #3a56d4, #5a7cff);
+    
+    /* Légère augmentation de taille */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    
+    /* Ombre plus prononcée */
+    -fx-effect: dropshadow(gaussian, rgba(74, 108, 247, 0.4), 12, 0.4, 0, 5);
+    
+    /* Bordure qui change légèrement */
+    -fx-border-color: #5a7cff;
+}
+
+/* Effet lors du clic */
+#btnConnexion:pressed {
+    /* Couleur plus plate */
+    -fx-background-color: #2a46b3;
+    
+    /* Légère réduction */
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    
+    /* Ombre réduite */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0.2, 0, 2);
+    
+    /* Animation de "rebond" */
+    -fx-translate-y: 2px;
+}
+
+/* Bouton désactivé */
+#btnConnexion:disabled {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #888888;
+    -fx-border-color: #aaaaaa;
+    -fx-cursor: default;
+    -fx-effect: none;
+}
+
+/* Effet de brillance subtile */
+#btnConnexion .text {
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.3), 0, 0, 0, 1);
+}
