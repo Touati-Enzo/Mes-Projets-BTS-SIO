@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane
+    style="-fx-background-color: #0A0F1E;"
+    stylesheets="@/Dashboard/hotel-luxury.css"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ListUsers.ListUsersController">
+
+    <!-- ══ HEADER ══ -->
+    <top>
+        <VBox styleClass="header-bar" spacing="3">
+            <HBox alignment="CENTER_LEFT" spacing="0">
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Gestion des Utilisateurs" styleClass="page-title"/>
+                    <Label text="ADMINISTRATION · ACCÈS COMPLET" styleClass="page-subtitle"/>
+                </VBox>
+                <TextField fx:id="searchField"
+                    promptText="Rechercher un utilisateur..."
+                    styleClass="search-field"
+                    onKeyReleased="#filterUsers"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ══ CONTENT ══ -->
+    <center>
+        <VBox styleClass="content-area" spacing="16">
+
+            <!-- Table -->
+            <TableView fx:id="tableUser" VBox.vgrow="ALWAYS"
+                       style="-fx-pref-height: 9999;">
+                <columns>
+                    <TableColumn fx:id="columnId"       prefWidth="50"  text="ID"/>
+                    <TableColumn fx:id="columnEmail"    prefWidth="180" text="Email"/>
+                    <TableColumn fx:id="columnUsername" prefWidth="130" text="Identifiant"/>
+                    <TableColumn fx:id="columnFirstName" prefWidth="110" text="Prénom"/>
+                    <TableColumn fx:id="columnLastName"  prefWidth="110" text="Nom"/>
+                    <TableColumn fx:id="columnRole"      prefWidth="80"  text="Rôle"/>
+                    <TableColumn fx:id="columnPhone"     prefWidth="120" text="Téléphone"/>
+                    <TableColumn fx:id="columnAddress"   prefWidth="200" text="Adresse"/>
+                    <TableColumn fx:id="columnAbonnement" prefWidth="120" text="Abonnement"/>
+                    <TableColumn fx:id="columnCreatedAt" prefWidth="150" text="Créé le"/>
+                    <TableColumn fx:id="columnUpdatedAt" prefWidth="150" text="Modifié le"/>
+                </columns>
+            </TableView>
+
+            <!-- Action Bar -->
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button fx:id="btnAdd"
+                    text="+ Ajouter"
+                    styleClass="btn-add"
+                    onAction="#addUser"/>
+                <Button fx:id="btnEdit"
+                    text="✎  Modifier"
+                    styleClass="btn-edit"
+                    onAction="#editUser"/>
+                <Button fx:id="btnDelete"
+                    text="✕  Supprimer"
+                    styleClass="btn-delete"
+                    onAction="#deleteUser"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnLoad"
+                    text="↻  Actualiser"
+                    styleClass="btn-refresh"
+                    onAction="#loadDataFromDatabase"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

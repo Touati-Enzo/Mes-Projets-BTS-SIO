@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane
+    style="-fx-background-color: #0A0F1E;"
+    stylesheets="@/Dashboard/hotel-luxury.css"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ListChambres.ListChambresController">
+
+    <top>
+        <VBox styleClass="header-bar" spacing="3">
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Gestion des Chambres" styleClass="page-title"/>
+                    <Label text="INVENTAIRE · TARIFS · DISPONIBILITÉ" styleClass="page-subtitle"/>
+                </VBox>
+                <TextField fx:id="searchField"
+                    promptText="Rechercher une chambre..."
+                    styleClass="search-field"
+                    onKeyReleased="#filterChambres"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox styleClass="content-area" spacing="16">
+            <TableView fx:id="tableChambres" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId"          prefWidth="50"  text="ID"/>
+                    <TableColumn fx:id="colNumero"       prefWidth="110" text="N° Chambre"/>
+                    <TableColumn fx:id="colPrix"         prefWidth="130" text="Prix / nuit (€)"/>
+                    <TableColumn fx:id="colPersonneMax"  prefWidth="120" text="Pers. max"/>
+                    <TableColumn fx:id="colDescription"  prefWidth="340" text="Description"/>
+                    <TableColumn fx:id="colDateCreation" prefWidth="170" text="Créée le"/>
+                    <TableColumn fx:id="colDateModif"    prefWidth="170" text="Modifiée le"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="+ Ajouter"    styleClass="btn-add"     onAction="#addChambre"/>
+                <Button text="✎  Modifier"  styleClass="btn-edit"    onAction="#editChambre"/>
+                <Button text="✕  Supprimer" styleClass="btn-delete"  onAction="#deleteChambre"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="↻  Actualiser" styleClass="btn-refresh" onAction="#loadDataFromDatabase"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

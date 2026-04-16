@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane
+    style="-fx-background-color: #0A0F1E;"
+    stylesheets="@/Dashboard/hotel-luxury.css"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ListReservations.ListReservationsController">
+
+    <top>
+        <VBox styleClass="header-bar" spacing="3">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Gestion des Réservations" styleClass="page-title"/>
+                    <Label text="SÉJOURS · CALENDRIER · STATUTS" styleClass="page-subtitle"/>
+                </VBox>
+                <ComboBox fx:id="filterStatut"
+                    promptText="Filtrer par statut"
+                    onAction="#applyFilter"
+                    style="-fx-background-color: #070D1A; -fx-border-color: #1E2D45; -fx-border-width:1; -fx-border-radius:4; -fx-background-radius:4; -fx-text-fill:#B8C8D8; -fx-font-family:Georgia; -fx-font-size:10pt; -fx-pref-width:180;"/>
+                <TextField fx:id="searchField"
+                    promptText="Rechercher..."
+                    styleClass="search-field"
+                    onKeyReleased="#filterReservations"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox styleClass="content-area" spacing="16">
+            <TableView fx:id="tableReservations" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId"         prefWidth="50"  text="ID"/>
+                    <TableColumn fx:id="colUserId"     prefWidth="70"  text="User ID"/>
+                    <TableColumn fx:id="colNumChambre" prefWidth="100" text="Chambre"/>
+                    <TableColumn fx:id="colDateDebut"  prefWidth="120" text="Arrivée"/>
+                    <TableColumn fx:id="colDateFin"    prefWidth="120" text="Départ"/>
+                    <TableColumn fx:id="colNbPersonne" prefWidth="90"  text="Personnes"/>
+                    <TableColumn fx:id="colPrix"       prefWidth="120" text="Prix total (€)"/>
+                    <TableColumn fx:id="colStatut"     prefWidth="130" text="Statut"/>
+                    <TableColumn fx:id="colCreatedAt"  prefWidth="160" text="Créée le"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="+ Ajouter"          styleClass="btn-add"     onAction="#addReservation"/>
+                <Button text="✎  Modifier"        styleClass="btn-edit"    onAction="#editReservation"/>
+                <Button text="✕  Supprimer"       styleClass="btn-delete"  onAction="#deleteReservation"/>
+                <Button text="⬇  Exporter PDF"
+    style="-fx-background-color: linear-gradient(to bottom, #1E2D45, #111E33);
+           -fx-text-fill: #C9A84C;
+           -fx-font-family: Georgia;
+           -fx-font-size: 10pt;
+           -fx-padding: 10 22 10 22;
+           -fx-border-radius: 4;
+           -fx-background-radius: 4;
+           -fx-cursor: hand;
+           -fx-border-color: #1E2D45;
+           -fx-border-width: 1;"
+    onAction="#exportPdf"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="↻  Actualiser"      styleClass="btn-refresh" onAction="#loadDataFromDatabase"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
